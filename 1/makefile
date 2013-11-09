@@ -33,15 +33,15 @@ $(SRC)/scena_moc.cpp: $(INC)/scena.h
 	moc $< -o $@
 
 $(PROJECT): $(SRC)/scena_moc.cpp $(OBJS) 
-	$(CXX) $(LDFLAGS) -o $(BIN)/$@ $(OBJS) $(LIBS)
+	$(CXX) $(LDFLAGS) -o $(BIN)/test.out $(OBJS) $(LIBS)
 
 run:
-	$(BIN)/$(PROJECT)
+	$(BIN)/test.out
 
 clean:
 	-rm -rf $(OBJ)/*.o $(SRC)/scena_moc.cpp
 
 realclean: clean
-	-rm -rf $(BIN)/$(PROJECT)
+	-rm -rf $(BIN)/test.out
 
 include ./$(MKFILES)/depend.mk
