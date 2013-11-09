@@ -20,5 +20,5 @@
 *.out
 *.app
 
-bin/
+
 scena_moc.cpp
