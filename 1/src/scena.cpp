@@ -147,7 +147,7 @@ void Scena::paintGL()
   glVertex3f(-1.0f, 1.0f, -1.0f);
  
   glEnd();
-  // line
+    // line
   glLineWidth(0.5f);
   glBegin(GL_LINES);
   glColor3f(1.0f, 1.0f, 1.0f);
@@ -186,13 +186,6 @@ void Scena::paintGL()
 	  glVertex3f(0.5f+i, 0.0f, -0.5f+j); 
 	  glEnd();
 	    
-	  // glBegin(GL_QUADS);	  
-	  // glColor3f(1.0f, 0.0f, 0.0f);   	  
-	  // glVertex3f(-0.5f+i, 0.0f, 0.5f+j); 
-	  // glVertex3f(0.5f+i, 0.0f, 0.5f+j);  
-	  // glVertex3f(0.5f+i, 0.0f, -0.5f+j); 
-	  // glVertex3f(-0.5f+i, 0.0f, -0.5f+j);
-	  // glEnd();	  
 	}
     }
   
