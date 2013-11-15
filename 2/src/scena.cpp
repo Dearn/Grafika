@@ -26,6 +26,13 @@ void Scena::timerFPS()
   FPS=0;
 }
 
+void Scena::AnimacjaStop()
+{
+
+
+
+}
+
 void Scena::timerGL()
 {
   updateGL();
@@ -198,6 +205,12 @@ void Scena::initializeGL()
   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
   glDepthFunc(GL_LEQUAL);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  // laboratorium 2
+ 
+  glFrontFace(GL_CCW);
+  glEnable(GL_DEPTH_TEST);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glEnable(GL_CULL_FACE);
 }
 
 Scena::~Scena()
