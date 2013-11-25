@@ -5,10 +5,17 @@
 //--==##==--
 
 int FPS;
+bool flag=0;
+bool i=0;
+float delta=1.0f;
 
 Scena::Scena(QApplication* app, QWidget *parent, const char *name)
-  : QGLWidget(parent), application(app)
-{
+  : QGLWidget(parent), application(app), tab(new Bazowa*[2])
+{  
+  tab[0]=new scenapierw();
+  tab[1]=new scenadruga();
+  
+
   setMinimumSize(640, 480);
   setMaximumSize(1980, 1050);
   
@@ -24,13 +31,6 @@ void Scena::timerFPS()
   std::cout << "FPS: " << FPS << '\n';
   delta=50.0f/FPS;
   FPS=0;
-}
-
-void Scena::AnimacjaStop()
-{
-
-
-
 }
 
 void Scena::timerGL()
@@ -50,6 +50,13 @@ void Scena::keyPressEvent(QKeyEvent *e)
     case Qt::Key_Space:
       flag = !flag;
       break;
+    case Qt::Key_Left:
+    i=0;
+      break;
+    case Qt::Key_Right:
+    i=1;
+      break;
+    
     }
 }
 
@@ -57,6 +64,7 @@ void Scena::keyPressEvent(QKeyEvent *e)
 void Scena::keyReleaseEvent(QKeyEvent *e)
 {
 }
+
 
 void Scena::resizeGL(int w, int h)
 {
@@ -72,7 +80,8 @@ void Scena::resizeGL(int w, int h)
 
 void Scena::paintGL()
 {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  tab[i]->paintGL();
+  /*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
    
   //--==## start from here ##==--
@@ -91,7 +100,7 @@ void Scena::paintGL()
 
 
   glBegin(GL_QUADS);
-  // top
+  // gora kwadratu
   glColor3f(1.0f, 0.0f, 0.0f);   
   glVertex3f(-1.0f, 1.0f, 1.0f); 
   glVertex3f(1.0f, 1.0f, 1.0f);  
@@ -116,7 +125,7 @@ void Scena::paintGL()
  
   glBegin(GL_QUADS);
 
-  // right
+  // prawy scian kwadratu
   glColor3f(0.0f, 0.0f, 1.0f);
   glVertex3f(1.0f, 1.0f, -1.0f);
   glVertex3f(1.0f, 1.0f, 1.0f);
@@ -126,7 +135,7 @@ void Scena::paintGL()
   glEnd();
  
   glBegin(GL_QUADS);
-  // left
+  // lewy scian kwadratu
   glColor3f(1.0f, 0.0f, 1.0f);
   glVertex3f(-1.0f, -1.0f, 1.0f);
   glVertex3f(-1.0f, 1.0f, 1.0f);
@@ -136,7 +145,7 @@ void Scena::paintGL()
   glEnd();
  
   glBegin(GL_QUADS);
-  // bottom
+  // dol kwadratu
   glColor3f(1.0f, 0.0f, 0.0f);
   glVertex3f(1.0f, -1.0f, 1.0f);
   glVertex3f(-1.0f, -1.0f, 1.0f);
@@ -146,7 +155,7 @@ void Scena::paintGL()
   glEnd();
  
   glBegin(GL_QUADS);
-  // back
+  // tyl kwadratu
   glColor3f(0.0f, 1.0f, 1.0f);
   glVertex3f(1.0f, 1.0f, -1.0f);
   glVertex3f(1.0f, -1.0f, -1.0f);
@@ -154,7 +163,7 @@ void Scena::paintGL()
   glVertex3f(-1.0f, 1.0f, -1.0f);
  
   glEnd();
-    // line
+    // linia
   glLineWidth(0.5f);
   glBegin(GL_LINES);
   glColor3f(1.0f, 1.0f, 1.0f);
@@ -166,7 +175,7 @@ void Scena::paintGL()
   
 
 
-  glLoadIdentity(); // zresetowanie translate/rotate
+  glLoadIdentity(); 
   glTranslatef(-5.0f, -4.0f,-20.0f);
   
   for(float i=1.0f; i<10.0;i++) 
@@ -176,38 +185,44 @@ void Scena::paintGL()
 	  glBegin(GL_TRIANGLES);
 	  glColor3f(1.0f, 0.0f, 0.0f);
 	  
-	  // lewy trojkat
+	  // trojkat lewy podlogi
 	  glVertex3f(-0.5f+i, 0.0f, 0.5f+j); 
-	  glColor3f(0.65f, 1.0f, 0.0f);
+	  glColor3f(0.0f, 0.0f, 1.0f);
 	  glVertex3f(0.5f+i, 0.0f, 0.5f+j);
-	  glColor3f(0.72f, 0.0f, 0.43f);
+	  glColor3f(1.0f, 1.0f, 1.0f);
 	  glVertex3f(-0.5f+i, 0.0f, -0.5f+j);
 	  glEnd();
-	  // prawy trojkat
+	  // trojkat prawy podlogi
 	  glBegin(GL_TRIANGLES);
-	  glColor3f(0.330f, 0.0f, 1.0f);
+	  glColor3f(0.0f, 0.0f, 1.0f);
 	  glVertex3f(-0.5f+i, 0.0f, -0.5f+j);
-	  glColor3f(0.210f, 1.0f, 0.0f);	  
+	  glColor3f(1.0f, 0.0f, 1.0f);	  
 	  glVertex3f(0.5f+i, 0.0f, 0.5f+j);
-	  glColor3f(0.354f, 0.0f, 0.0f);
+	  glColor3f(1.0f, 1.0f, 1.0f);
 	  glVertex3f(0.5f+i, 0.0f, -0.5f+j); 
 	  glEnd();
 	    
 	}
-    }
+    }*/
   
 }
 void Scena::initializeGL()
 {
+	
+	
+	
+	
+	
   glClearDepth(1.0f);
   glShadeModel(GL_SMOOTH);
   glEnable(GL_DEPTH_TEST);
   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
   glDepthFunc(GL_LEQUAL);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-  // laboratorium 2
- 
-  glFrontFace(GL_CCW);
+  
+  
+  glFrontFace(GL_CCW); //pokazywanie podlogi
+//glFrontFace(GL_CW);
   glEnable(GL_DEPTH_TEST);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glEnable(GL_CULL_FACE);
@@ -215,6 +230,9 @@ void Scena::initializeGL()
 
 Scena::~Scena()
 {
+	delete tab[0];
+	delete tab[1];
+	delete []tab;
 }
 
 //--==##==--
