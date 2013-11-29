@@ -81,138 +81,9 @@ void Scena::resizeGL(int w, int h)
 void Scena::paintGL()
 {
   tab[i]->paintGL();
-  /*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glLoadIdentity();
-   
-  //--==## start from here ##==--
-  if(flag) // 25fps
-    {
-      usleep(40000);
-    }
-
-   
-  glTranslatef(0.0f, 0.0f,-10.0f);
-  static float z = 0.0f;
-  z+=2.5f*delta;
-  glRotatef(45.0f, 1.0f, 1.0f, 0.0f); //kąt 45 stopni
-  glRotatef(z, 0.0f, 1.0f, 0.0f); // obracanie
-
-
-
-  glBegin(GL_QUADS);
-  // gora kwadratu
-  glColor3f(1.0f, 0.0f, 0.0f);   
-  glVertex3f(-1.0f, 1.0f, 1.0f); 
-  glVertex3f(1.0f, 1.0f, 1.0f);  
-  glVertex3f(1.0f, 1.0f, -1.0f); 
-  glVertex3f(-1.0f, 1.0f, -1.0f);
- 
-  glEnd();
- 
-  glBegin(GL_QUADS);
-
-
- 
-  // glEnd();
-  glColor3f(0.0f, 1.0f, 0.0f);
- 
-  glVertex3f(1.0f, -1.0f, 1.0f);
-  glVertex3f(1.0f, 1.0f, 1.0f);
-  glVertex3f(-1.0f, 1.0f, 1.0f);
-  glVertex3f(-1.0f, -1.0f, 1.0f);
- 
-  glEnd();
- 
-  glBegin(GL_QUADS);
-
-  // prawy scian kwadratu
-  glColor3f(0.0f, 0.0f, 1.0f);
-  glVertex3f(1.0f, 1.0f, -1.0f);
-  glVertex3f(1.0f, 1.0f, 1.0f);
-  glVertex3f(1.0f, -1.0f, 1.0f);
-  glVertex3f(1.0f, -1.0f, -1.0f);
- 
-  glEnd();
- 
-  glBegin(GL_QUADS);
-  // lewy scian kwadratu
-  glColor3f(1.0f, 0.0f, 1.0f);
-  glVertex3f(-1.0f, -1.0f, 1.0f);
-  glVertex3f(-1.0f, 1.0f, 1.0f);
-  glVertex3f(-1.0f, 1.0f, -1.0f);
-  glVertex3f(-1.0f, -1.0f, -1.0f);
- 
-  glEnd();
- 
-  glBegin(GL_QUADS);
-  // dol kwadratu
-  glColor3f(1.0f, 0.0f, 0.0f);
-  glVertex3f(1.0f, -1.0f, 1.0f);
-  glVertex3f(-1.0f, -1.0f, 1.0f);
-  glVertex3f(-1.0f, -1.0f, -1.0f);
-  glVertex3f(1.0f, -1.0f, -1.0f);
- 
-  glEnd();
- 
-  glBegin(GL_QUADS);
-  // tyl kwadratu
-  glColor3f(0.0f, 1.0f, 1.0f);
-  glVertex3f(1.0f, 1.0f, -1.0f);
-  glVertex3f(1.0f, -1.0f, -1.0f);
-  glVertex3f(-1.0f, -1.0f, -1.0f);
-  glVertex3f(-1.0f, 1.0f, -1.0f);
- 
-  glEnd();
-    // linia
-  glLineWidth(0.5f);
-  glBegin(GL_LINES);
-  glColor3f(1.0f, 1.0f, 1.0f);
-  glVertex3f(0.0f, -5.0f, 0.0f);
-  glVertex3f(0.0f, 5.0f, 0.0f);
-
-  glEnd();
-  // podloga
-  
-
-
-  glLoadIdentity(); 
-  glTranslatef(-5.0f, -4.0f,-20.0f);
-  
-  for(float i=1.0f; i<10.0;i++) 
-    {
-      for(float j=1.0f; j<10.0;j++)
-	{
-	  glBegin(GL_TRIANGLES);
-	  glColor3f(1.0f, 0.0f, 0.0f);
-	  
-	  // trojkat lewy podlogi
-	  glVertex3f(-0.5f+i, 0.0f, 0.5f+j); 
-	  glColor3f(0.0f, 0.0f, 1.0f);
-	  glVertex3f(0.5f+i, 0.0f, 0.5f+j);
-	  glColor3f(1.0f, 1.0f, 1.0f);
-	  glVertex3f(-0.5f+i, 0.0f, -0.5f+j);
-	  glEnd();
-	  // trojkat prawy podlogi
-	  glBegin(GL_TRIANGLES);
-	  glColor3f(0.0f, 0.0f, 1.0f);
-	  glVertex3f(-0.5f+i, 0.0f, -0.5f+j);
-	  glColor3f(1.0f, 0.0f, 1.0f);	  
-	  glVertex3f(0.5f+i, 0.0f, 0.5f+j);
-	  glColor3f(1.0f, 1.0f, 1.0f);
-	  glVertex3f(0.5f+i, 0.0f, -0.5f+j); 
-	  glEnd();
-	    
-	}
-    }*/
-  
 }
 void Scena::initializeGL()
 {
-	
-	
-	
-	
-	
   glClearDepth(1.0f);
   glShadeModel(GL_SMOOTH);
   glEnable(GL_DEPTH_TEST);
@@ -221,9 +92,9 @@ void Scena::initializeGL()
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   
   
-  glFrontFace(GL_CCW); //pokazywanie podlogi
-//glFrontFace(GL_CW);
-  glEnable(GL_DEPTH_TEST);
+  glFrontFace(GL_CCW); //punkty Counter Clock Wise
+  //glFrontFace(GL_CW); //punkty clock wise
+  glEnable(GL_DEPTH_TEST); 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glEnable(GL_CULL_FACE);
 }

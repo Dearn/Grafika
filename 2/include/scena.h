@@ -27,7 +27,7 @@ class Bazowa
   virtual ~Bazowa(){}
 };
 
-class scenapierw:public Bazowa
+class scenapierw: public Bazowa
 {
  public:
   void paintGL(){

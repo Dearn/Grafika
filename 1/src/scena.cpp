@@ -147,7 +147,7 @@ void Scena::paintGL()
   glVertex3f(-1.0f, 1.0f, -1.0f);
  
   glEnd();
-    // line
+  // line
   glLineWidth(0.5f);
   glBegin(GL_LINES);
   glColor3f(1.0f, 1.0f, 1.0f);
