@@ -42,25 +42,8 @@ class scenadruga: public Bazowa
   float **tablica2;
  public:
   void paintGL();
-  
-  scenadruga() // zaj. 13.12.13
-    {
-      tablica = new float *[11];
-      tablica2 = new float *[11];
-
-      for(int i=0; i<11; ++i)
-      	{
-      	  tablica[i]= new float[11];
-      	  tablica2[i]= new float[11];
-	  for(int j=0; j<11; ++j)
-	    {
-	      
-	      tablica[i][j] = 0.0f;
-	      tablica2[i][j] = (sin(i/3.14f)*cos((j-5.0f)/3.14f)*8.0f)/200.0f;
-
-	    }
-      	}
-    }
+  scenadruga();
+  ~scenadruga();
 };
 
 
@@ -71,9 +54,6 @@ class Scena : public QGLWidget
  private:
   QApplication *application;
   Bazowa **tab;
-
-
-      
 
  public:
   Scena(QApplication* app, QWidget *parent=NULL, const char *name=NULL);
