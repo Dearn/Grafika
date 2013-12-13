@@ -56,7 +56,7 @@ class scenadruga: public Bazowa
 	    {
 	      
 	      tablica[i][j] = 0.0f;
-	      tablica2[i][j] = sin(i/3.14f)*cos((j-5.0f)/3.14f)*8.0f;
+	      tablica2[i][j] = (sin(i/3.14f)*cos((j-5.0f)/3.14f)*8.0f)/200.0f;
 
 	    }
       	}

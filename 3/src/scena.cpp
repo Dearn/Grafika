@@ -263,24 +263,33 @@ void scenadruga::paintGL()
 	  
 	  // trojkat lewy podlogi
 
-	  glVertex3f(-0.5f+i, tablica[i][j], 0.5f+j); 
+	  glVertex3f(-0.5f+i, tablica[i][j+1], 0.5f+j); 
 	  glColor3f(0.3f, 0.25f, 1.0f);
-	  glVertex3f(0.5f+i, tablica[i][j+1], 0.5f+j);
+	  glVertex3f(0.5f+i, tablica[i+1][j+1], 0.5f+j);
 	  glColor3f(0.21f, 0.40f, 1.0f);
-	  glVertex3f(-0.5f+i, tablica[i+1][j], -0.5f+j);
+	  glVertex3f(-0.5f+i, tablica[i][j], -0.5f+j);
 	  glEnd();
 	  // trojkat prawy podlogi
 	  glBegin(GL_TRIANGLES);
 	  glColor3f(0.25f, 0.30f, 1.0f);
-	  glVertex3f(-0.5f+i, tablica[i+1][j], -0.5f+j);
+	  glVertex3f(-0.5f+i, tablica[i][j], -0.5f+j);
 	  glColor3f(1.0f, 0.15f, 0.8f);	  
-	  glVertex3f(0.5f+i, tablica[i][j+1], 0.5f+j);
+	  glVertex3f(0.5f+i, tablica[i+1][j+1], 0.5f+j);
 	  glColor3f(1.0f, 1.0f, 1.0f);
-	  glVertex3f(0.5f+i, tablica[i+1][j+1], -0.5f+j); 
+	  glVertex3f(0.5f+i, tablica[i+1][j], -0.5f+j); 
 	  glEnd();
 	    
+
+
+	  
 	}
     }
+
+  for(int i=0; i<10;++i){
+    for(int j=0; j<10; ++j){
+      tablica[i][j]+=tablica2[i][j];
+    }
+  }
 }
 
 
