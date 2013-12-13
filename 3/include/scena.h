@@ -37,12 +37,30 @@ class scenapierw: public Bazowa
 
 class scenadruga: public Bazowa
 {
+ private:
+  float **tablica;
+  float **tablica2;
  public:
+  void paintGL();
+  
+  scenadruga() // zaj. 13.12.13
+    {
+      tablica = new float *[11];
+      tablica2 = new float *[11];
 
-  void paintGL(){
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
-  }
+      for(int i=0; i<11; ++i)
+      	{
+      	  tablica[i]= new float[11];
+      	  tablica2[i]= new float[11];
+	  for(int j=0; j<11; ++j)
+	    {
+	      
+	      tablica[i][j] = 0.0f;
+	      tablica2[i][j] = sin(i/3.14f)*cos((j-5.0f)/3.14f)*8.0f;
+
+	    }
+      	}
+    }
 };
 
 
