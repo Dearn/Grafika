@@ -31,6 +31,7 @@ void Scena::timerFPS()
   std::cout << "FPS: " << FPS << '\n';
   delta=50.0f/FPS;
   FPS=0;
+
 }
 
 void Scena::timerGL()
@@ -51,10 +52,10 @@ void Scena::keyPressEvent(QKeyEvent *e)
       flag = !flag;
       break;
     case Qt::Key_Left:
-    i=0;
+      i=0;
       break;
     case Qt::Key_Right:
-    i=1;
+      i=1;
       break;
     
     }
@@ -71,7 +72,6 @@ void Scena::resizeGL(int w, int h)
   glViewport(0, 0, w, h);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-
   gluPerspective(45.0f, (float)w/(float)h, 1.0f, 100.0);
 
   glMatrixMode(GL_MODELVIEW);
@@ -84,6 +84,7 @@ void Scena::paintGL()
 }
 void Scena::initializeGL()
 {
+
   glClearDepth(1.0f);
   glShadeModel(GL_SMOOTH);
   glEnable(GL_DEPTH_TEST);
@@ -99,11 +100,139 @@ void Scena::initializeGL()
   glEnable(GL_CULL_FACE);
 }
 
+void scenapierw::paintGL()
+{
+  
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity();
+
+  //--==## start from here ##==--
+  if(flag) // 25fps
+    {
+      usleep(40000);
+    }
+  
+  
+  glTranslatef(0.0f, 0.0f,-10.0f);
+  static float z = 0.0f;
+  z+=2.5f*delta;
+  glRotatef(45.0f, 1.0f, 1.0f, 0.0f); //kąt 45 stopni
+  glRotatef(z, 0.0f, 1.0f, 0.0f); // obracanie
+
+
+
+  glBegin(GL_QUADS);
+  // gora kwadratu
+  glColor3f(1.0f, 0.0f, 0.0f);   
+  glVertex3f(-1.0f, 1.0f, 1.0f); 
+  glVertex3f(1.0f, 1.0f, 1.0f);  
+  glVertex3f(1.0f, 1.0f, -1.0f); 
+  glVertex3f(-1.0f, 1.0f, -1.0f);
+ 
+  glEnd();
+ 
+  glBegin(GL_QUADS);
+
+  // glEnd();
+  glColor3f(0.0f, 1.0f, 0.0f);
+ 
+  glVertex3f(1.0f, -1.0f, 1.0f);
+  glVertex3f(1.0f, 1.0f, 1.0f);
+  glVertex3f(-1.0f, 1.0f, 1.0f);
+  glVertex3f(-1.0f, -1.0f, 1.0f);
+ 
+  glEnd();
+ 
+  glBegin(GL_QUADS);
+
+  // prawy scian kwadratu
+  glColor3f(0.0f, 0.0f, 1.0f);
+  glVertex3f(1.0f, 1.0f, -1.0f);
+  glVertex3f(1.0f, 1.0f, 1.0f);
+  glVertex3f(1.0f, -1.0f, 1.0f);
+  glVertex3f(1.0f, -1.0f, -1.0f);
+ 
+  glEnd();
+ 
+  glBegin(GL_QUADS);
+  // lewy scian kwadratu
+  glColor3f(1.0f, 0.0f, 1.0f);
+  glVertex3f(-1.0f, -1.0f, 1.0f);
+  glVertex3f(-1.0f, 1.0f, 1.0f);
+  glVertex3f(-1.0f, 1.0f, -1.0f);
+  glVertex3f(-1.0f, -1.0f, -1.0f);
+ 
+  glEnd();
+ 
+  glBegin(GL_QUADS);
+  // dol kwadratu
+  glColor3f(1.0f, 0.0f, 0.0f);
+  glVertex3f(1.0f, -1.0f, 1.0f);
+  glVertex3f(-1.0f, -1.0f, 1.0f);
+  glVertex3f(-1.0f, -1.0f, -1.0f);
+  glVertex3f(1.0f, -1.0f, -1.0f);
+ 
+  glEnd();
+ 
+  glBegin(GL_QUADS);
+  // tyl kwadratu
+  glColor3f(0.0f, 1.0f, 1.0f);
+  glVertex3f(1.0f, 1.0f, -1.0f);
+  glVertex3f(1.0f, -1.0f, -1.0f);
+  glVertex3f(-1.0f, -1.0f, -1.0f);
+  glVertex3f(-1.0f, 1.0f, -1.0f);
+ 
+  glEnd();
+  // linia
+  glLineWidth(0.5f);
+  glBegin(GL_LINES);
+  glColor3f(1.0f, 1.0f, 1.0f);
+  glVertex3f(0.0f, -5.0f, 0.0f);
+  glVertex3f(0.0f, 5.0f, 0.0f);
+
+  glEnd();
+  // podloga
+  
+
+
+  glLoadIdentity(); 
+  glTranslatef(-5.0f, -4.0f,-20.0f);
+  
+  for(float i=1.0f; i<10.0;i++) 
+    {
+      for(float j=1.0f; j<10.0;j++)
+	{
+	  glBegin(GL_TRIANGLES);
+	  glColor3f(1.0f, 0.0f, 0.0f);
+	  
+	  // trojkat lewy podlogi
+
+	  glVertex3f(-0.5f+i, 0.0f, 0.5f+j); 
+	  glColor3f(0.3f, 0.25f, 1.0f);
+	  glVertex3f(0.5f+i, 0.0f, 0.5f+j);
+	  glColor3f(0.21f, 0.40f, 1.0f);
+	  glVertex3f(-0.5f+i, 0.0f, -0.5f+j);
+	  glEnd();
+	  // trojkat prawy podlogi
+	  glBegin(GL_TRIANGLES);
+	  glColor3f(0.25f, 0.30f, 1.0f);
+	  glVertex3f(-0.5f+i, 0.0f, -0.5f+j);
+	  glColor3f(1.0f, 0.15f, 0.8f);	  
+	  glVertex3f(0.5f+i, 0.0f, 0.5f+j);
+	  glColor3f(1.0f, 1.0f, 1.0f);
+	  glVertex3f(0.5f+i, 0.0f, -0.5f+j); 
+	  glEnd();
+	    
+	}
+    }
+}
+
+
 Scena::~Scena()
 {
-	delete tab[0];
-	delete tab[1];
-	delete []tab;
+  delete tab[0];
+  delete tab[1];
+  delete []tab;
 }
 
 //--==##==--
