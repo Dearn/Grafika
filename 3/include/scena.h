@@ -1,5 +1,6 @@
 //--==## Implemented by dr inż. Krzysztof Rojek ##==--
-
+// texture globalnie GLuint texture [1];
+// bialy obiekt
 #ifndef SCENA_H
 #define SCENA_H
 

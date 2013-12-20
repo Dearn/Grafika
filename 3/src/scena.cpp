@@ -8,6 +8,7 @@ int FPS;
 bool flag=0;
 bool i=0;
 float delta=1.0f;
+GLuint texture[1];
 
 Scena::Scena(QApplication* app, QWidget *parent, const char *name)
   : QGLWidget(parent), application(app), tab(new Bazowa*[2])
@@ -246,6 +247,20 @@ scenadruga::scenadruga()
 	  
 	}
     }
+  QImage tex[1], buf;
+  if(!buf.load("data/rock.bmp")) { qDebug("Nie znaleziono pliku !"); }
+  else { tex[0] = QGLWidget::convertToGLFormat(buf); }
+  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+  for(int i=0; i<1; ++i)
+    {
+      glGenTextures(1, &texture[i]);
+      glBindTexture(GL_TEXTURE_2D, texture[i]);
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex[i].width(), tex[i].height(),
+		   0, GL_RGBA, GL_UNSIGNED_BYTE, tex[i].bits());
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    }
+  //--------------
 }
 
 
@@ -277,27 +292,29 @@ void scenadruga::paintGL()
       for(int j=0; j<10.0;j++)
 	{
 	  glBegin(GL_TRIANGLES);
-	  glColor3f(1.0f, 0.0f, 0.0f);
-	  
 	  // trojkat lewy podlogi
-	  
+	  glColor3f(1.0f, 1.0f, 1.0f);
 	  glVertex3f(-0.5f+i, tablica[i][j+1], 0.5f+j); 
-	  glColor3f(0.3f, 0.25f, 1.0f);
+	  glColor3f(1.0f, 1.0f, 1.0f);
 	  glVertex3f(0.5f+i, tablica[i+1][j+1], 0.5f+j);
-	  glColor3f(1.0f, 1.0f, 0.0f);
+	  glColor3f(1.0f, 1.0f, 1.0f);
+
 	  glVertex3f(-0.5f+i, tablica[i][j], -0.5f+j);
 	  glEnd();
 	  // trojkat prawy podlogi
 	  glBegin(GL_TRIANGLES);
-	  glColor3f(0.25f, 0.30f, 1.0f);
-	  glVertex3f(-0.5f+i, tablica[i][j], -0.5f+j);
-	  glColor3f(1.0f, 0.15f, 0.8f);	  
+	  glColor3f(1.0f, 1.0f, 1.0f);
+	  glVertex3f(-0.5f+i, tablica[i][j], -0.5f+j);	  
+	  glColor3f(1.0f, 1.0f, 1.0f);
 	  glVertex3f(0.5f+i, tablica[i+1][j+1], 0.5f+j);
-	  glColor3f(1.0f, 1.0f, 0.0f);
+	  glColor3f(1.0f, 1.0f, 1.0f);
 	  glVertex3f(0.5f+i, tablica[i+1][j], -0.5f+j); 
 	  glEnd();
 	}
     }
+
+
+
   static int licznik=0;
   ++licznik;
   for(int i=0; i<10;++i)
