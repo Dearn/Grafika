@@ -274,8 +274,8 @@ scenadruga::~scenadruga()
   
   for(int i=0; i<11; ++i)
     {
-      delete tablica[i];
-      delete tablica2[i];
+      delete []tablica[i];
+      delete []tablica2[i];
       
     }
   delete []tablica;
