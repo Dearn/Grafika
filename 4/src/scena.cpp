@@ -6,13 +6,12 @@
 
 int FPS;
 bool flag=0;
-bool i=0;
+bool i=1; // 0 - pierwsza scena, 1 - druga scena
 float delta=1.0f;
-GLuint texture[1];
-GLuint korka[1];
-QImage tex[1],koreczka[1], buf,buf2;
-GLUquadric *quadratic;
-GLUquadric *quadratic2;
+GLuint texture[4];
+QImage tex[4], buf;
+GLUquadric *quadratic; //pien
+GLUquadric *sky;
 
 
 Scena::Scena(QApplication* app, QWidget *parent, const char *name)
@@ -104,42 +103,32 @@ void Scena::initializeGL()
   glEnable(GL_DEPTH_TEST); 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glEnable(GL_CULL_FACE);
-  // liscie
-  // if(!buf.load("data/lisc.bmp")) { qDebug("Nie znaleziono pliku !"); }
-  // else { tex[0] = QGLWidget::convertToGLFormat(buf); }
-  // glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-  // for(int i=0; i<1; ++i)
-  //   {
-  //     glGenTextures(1, &texture[i]);
-  //     glBindTexture(GL_TEXTURE_2D, texture[i]);
-  //     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex[i].width(), tex[i].height(),
-  // 		   0, GL_RGBA, GL_UNSIGNED_BYTE, tex[i].bits());
-  //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  //   }
+
+  //ladowanie textur
+  if(!buf.load("data/rock.bmp")) { qDebug("Nie znaleziono pliku !"); }
+  else { tex[0] = QGLWidget::convertToGLFormat(buf); }
+  
+  if(!buf.load("data/kora.bmp")) { qDebug("Nie znaleziono pliku !"); }
+  else { tex[1] = QGLWidget::convertToGLFormat(buf); }
+  
+  if(!buf.load("data/lisc.bmp")) { qDebug("Nie znaleziono pliku !"); }
+  else { tex[2] = QGLWidget::convertToGLFormat(buf); }
+  
+  if(!buf.load("data/sky.bmp")) { qDebug("Nie znaleziono pliku !"); }
+  else { tex[3] = QGLWidget::convertToGLFormat(buf); }
 
 
+  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-
-  // kora
-
-  // if(!buf.load("data/lisc.bmp")) { qDebug("Nie znaleziono pliku !"); }
-  // else { koreczka[0] = QGLWidget::convertToGLFormat(buf2); }
-  // glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-  // for(int i=0; i<1; ++i)
-  //   {
-  //     glGenTextures(1, &korka[i]);
-  //     glBindTexture(GL_TEXTURE_2D, korka[i]);
-  //     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, koreczka[i].width(), koreczka[i].height(),
-  // 		   0, GL_RGBA, GL_UNSIGNED_BYTE, koreczka[i].bits());
-  //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  //   }
-
-
-
-  // skala
-
+  for(int i=0; i<4; ++i)
+    {
+      glGenTextures(1, &texture[i]);
+      glBindTexture(GL_TEXTURE_2D, texture[i]);
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex[i].width(), tex[i].height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, tex[i].bits());
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    }
+  glEnable(GL_TEXTURE_2D);
 
 }
 
@@ -161,8 +150,6 @@ void scenapierw::paintGL()
   z+=2.5f*delta;
   glRotatef(45.0f, 1.0f, 1.0f, 0.0f); //kąt 45 stopni
   glRotatef(z, 0.0f, 1.0f, 0.0f); // obracanie
-
-
 
   glBegin(GL_QUADS);
   // gora kwadratu
@@ -285,7 +272,7 @@ scenadruga::scenadruga()
 	{
 	  
 	  // tablica[i][j] = 0.0f;
-	  tablica2[i][j] = (sin(i/3.14f)*cos((j-5.0f)/3.14f)*8.0f);// /200.0f;;
+	  tablica2[i][j] = (sin(i/3.14f)*cos((j-5.0f)/3.14f)*5.0f);// /200.0f;;
 	  
 	}
     }
@@ -306,37 +293,9 @@ scenadruga::~scenadruga()
   delete []tablica;
   delete []tablica2;
 }
-
-void scenadruga::paintGL()
+void scenadruga::podloga()
 {
-  
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glLoadIdentity();
-
-  if(!buf.load("data/rock.bmp")) { qDebug("Nie znaleziono pliku !"); }
-  else { tex[0] = QGLWidget::convertToGLFormat(buf); }
-  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-  for(int i=0; i<1; ++i)
-    {
-      glGenTextures(1, &texture[i]);
-      glBindTexture(GL_TEXTURE_2D, texture[i]);
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex[i].width(), tex[i].height(),
-  		   0, GL_RGBA, GL_UNSIGNED_BYTE, tex[i].bits());
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    }
-  glEnable(GL_TEXTURE_2D); //142 linia oryginalnie
-  glLoadIdentity(); 
-  // glRotatef(45.0f, 1.0f, 1.0f, 0.0f); //kąt 45 stopni
-  glTranslatef(0.0f, 0.0f,-40.0f);
-  static float zz = 0.0f;
-  zz+=2.5f*delta;
-  glRotatef(zz, 0.0f, 1.0f, 0.0f); // obracanie
-
-
-  // glLoadIdentity(); 
-  glTranslatef(-5.0f, -4.0f,-20.0f);
-  
+  glBindTexture(GL_TEXTURE_2D, texture[0]); 
   for(int i=0; i<10.0;i++) 
     {
       for(int j=0; j<10.0;j++)
@@ -357,8 +316,6 @@ void scenadruga::paintGL()
     	  glEnd();
 
 
-
-
     	  // trojkat prawy podlogi
     	  glBegin(GL_TRIANGLES);
     	  // glColor3f(1.0f, 1.0f, 1.0f);
@@ -374,55 +331,78 @@ void scenadruga::paintGL()
     	}
     }
 
-  if(!buf.load("data/kora.bmp")) { qDebug("Nie znaleziono pliku !"); }
-  else { tex[0] = QGLWidget::convertToGLFormat(buf); }
-  glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-  for(int i=0; i<1; ++i)
-    {
-      glGenTextures(1, &texture[i]);
-      glBindTexture(GL_TEXTURE_2D, texture[i]);
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex[i].width(), tex[i].height(),
-  		   0, GL_RGBA, GL_UNSIGNED_BYTE, tex[i].bits());
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    }
-  // pierwsze drzewko      
+}
+
+void scenadruga::drzewo()
+{
+  glBindTexture(GL_TEXTURE_2D, texture[1]);
   quadratic = gluNewQuadric();
   gluQuadricTexture(quadratic, GL_TRUE);      // Create Texture Coords
-  glRotatef(-90.0f, 90.0f, 1.0f, 0.0f);
-  gluCylinder(quadratic,0.3f,0.42f,2.0f,12,12); //wysoosc      
-
-  // drugie drzewo
+  //pien
+  gluCylinder(quadratic,0.3f,0.2f,2.0f,12,12); //wysoosc      
   glTranslatef(0.0f, 0.0f, 2.0f);
   quadratic = gluNewQuadric();
   gluQuadricTexture(quadratic, GL_TRUE);      // Create Texture Coords
-  gluCylinder(quadratic,0.3f,0.42f,2.0f,12,12);      
-
-
-  // trzecie drzewo
+  gluCylinder(quadratic,0.3f,0.20f,2.0f,12,12);      
   glTranslatef(0.0f, 0.0f, 2.0f);
   quadratic = gluNewQuadric();
   gluQuadricTexture(quadratic, GL_TRUE);      // Create Texture Coords
-  gluCylinder(quadratic,0.3f,0.42f,2.0f,12,12);      
+  gluCylinder(quadratic,0.3f,0.20f,2.0f,12,12);      
+  //korona
+  glBindTexture(GL_TEXTURE_2D, texture[3]);
+
+  // glBegin(GL_TRIANGLES);
+  // glTexCoord2f(-1.5f, 1.5f);
+  // glVertex3f(-1.5f, 0.0f, 1.5f); 
+  // glTexCoord2f(1.5f, 0.5f);
+  // glVertex3f(1.5f, 0.0f, 1.5f);
+  // glTexCoord2f(-1.5f, -0.5f);
+  // glVertex3f(-1.5f, 0.0f, -1.5f);
+  // glEnd();
 
 
-  // glTranslatef(0.0f, 10.0f, 0.0f);
+}
 
 
-  // quadratic2 = gluNewQuadric();
-  // gluQuadricTexture(quadratic2, GL_TRUE);      // Create Texture Coords
-  // gluCylinder(quadratic2,0.3f,0.3f,5.0f,12,12);      
+void scenadruga::niebo()
+{
+  glLoadIdentity();
+  glRotatef(0.0f, 45.0f, 0.0f, 0.0f);
+  glTranslatef(-0.0f, 2.0f, -99.0f);  
+
+  sky = gluNewQuadric();
+  gluQuadricNormals(sky, GLU_SMOOTH);
+  gluQuadricTexture(sky, GL_TRUE);
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, texture[3]);    // texID is the texture ID of a
+  gluSphere(sky, 65.0f, 300, 300);
+
+}
+void scenadruga::paintGL()
+{
+  
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity();
 
 
 
 
-  // glTranslatef(-9.0f, 0.0f, 0.0f);
+  glTranslatef(-0.0f, -4.0f,-20.0f);
+  static float z = 0.0f;
+  z+=2.5f*delta;
+  glRotatef(z, 0.0f, 1.0f, 0.0f); // obracanie
 
 
-  // quadratic2 = gluNewQuadric();
-  // gluQuadricTexture(quadratic2, GL_TRUE);      // Create Texture Coords
-  // gluCylinder(quadratic2,0.3f,0.3f,5.0f,12,12);      
-
+  podloga();
+  glRotatef(270.0f, 90.0f, 1.0f, 0.0f);
+  drzewo();//top left
+  glTranslatef(9.0f, 0.0f, -4.0f);
+  drzewo(); //top right
+  glTranslatef(0.0f, -9.0f, -4.0f);
+  drzewo(); //bottom right
+  glTranslatef(-9.0f, 0.0f, -4.0f);
+  drzewo(); //bottom right
+  niebo();
 
   // static int licznik=200;
   // ++licznik;

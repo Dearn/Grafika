@@ -42,6 +42,9 @@ class scenadruga: public Bazowa
   float **tablica2;
  public:
   void paintGL();
+  void podloga();
+  void niebo();
+  void drzewo();
   scenadruga();
   ~scenadruga();
 };
