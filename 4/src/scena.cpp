@@ -394,8 +394,6 @@ void scenadruga::paintGL()
 
   // drugie drzewo
   glTranslatef(0.0f, 0.0f, 2.0f);
-
-
   quadratic = gluNewQuadric();
   gluQuadricTexture(quadratic, GL_TRUE);      // Create Texture Coords
   gluCylinder(quadratic,0.3f,0.42f,2.0f,12,12);      
